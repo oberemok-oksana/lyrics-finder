@@ -5,13 +5,12 @@ import { getTrackInfo, getTrackLyrics } from "../api";
 const Lyrics = (props) => {
   const history = useHistory();
   const params = useParams();
-  console.log(params.trackId);
 
   const { data, isLoading } = useQuery(["track"], () =>
     getTrackInfo(params.trackId)
   );
   const { data: lyrics, isLoading: lyricsIsLoading } = useQuery(
-    ["trackLyrics"],
+    ["trackLyrics", params.trackId],
     () => getTrackLyrics(params.trackId)
   );
 
@@ -20,8 +19,8 @@ const Lyrics = (props) => {
   }
 
   const genre =
-    data.primary_genres.music_genre_list[0].music_genre.music_genre_name || "";
-  console.log(lyrics);
+    data.primary_genres.music_genre_list[0]?.music_genre?.music_genre_name ||
+    "N/A";
 
   return (
     <div className="container">
