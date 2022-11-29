@@ -1,15 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import { useHistory } from "react-router-dom";
-import { getTopTracks } from "../api";
+import { useState } from "react";
+import { findTrack, getTopTracks } from "../api";
 import Card from "../components/Card";
 
 const HomePage = () => {
+  const [search, setSearch] = useState("");
+  const [searchText, setSearchText] = useState("");
   const { data: topTracks, isLoading } = useQuery(["topTracks"], getTopTracks);
-  const history = useHistory();
+  const { data: searchTracks, isInitialLoading: searchTrackIsLoading } =
+    useQuery(["searchTrack", search], () => findTrack(search), {
+      select: (data) => {
+        return data.slice(0, 9);
+      },
+      enabled: !!search,
+    });
 
-  // const showLyrics = (id) => {
-  //   history.push(`/lyrics/${id}`);
-  // };
+  const changeSearchText = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  if (isLoading || searchTrackIsLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="container">
@@ -19,12 +31,21 @@ const HomePage = () => {
           <h1>Search For A Song</h1>
         </div>
         <h3>Get the lyrics for any track</h3>
-        <form action="#" className="header-form">
+        <form
+          action="#"
+          className="header-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSearch(searchText);
+          }}
+        >
           <input
             type="text"
             placeholder="Song title..."
             name="song-title"
             className="header-form__input"
+            value={searchText}
+            onChange={changeSearchText}
           />
           <button className="header-form__btn">Get Track Lyrics</button>
         </form>
@@ -32,10 +53,19 @@ const HomePage = () => {
       <main className="main">
         <h3> Top 10 Tracks</h3>
         <ul className="cards">
-          {isLoading && <p>Loading...</p>}
-          {!isLoading &&
-            topTracks.map((item) => {
-              return (
+          {!search
+            ? topTracks.map((item) => {
+                return (
+                  <Card
+                    artist={item.track.artist_name}
+                    key={item.track.track_id}
+                    track={item.track.track_name}
+                    album={item.track.album_name}
+                    id={item.track.commontrack_id}
+                  />
+                );
+              })
+            : searchTracks.map((item) => (
                 <Card
                   artist={item.track.artist_name}
                   key={item.track.track_id}
@@ -43,8 +73,7 @@ const HomePage = () => {
                   album={item.track.album_name}
                   id={item.track.commontrack_id}
                 />
-              );
-            })}
+              ))}
         </ul>
       </main>
     </div>
