@@ -1,16 +1,13 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Card = (props) => {
   const history = useHistory();
-  const params = useParams();
 
   const showLyrics = () => {
     history.push(`/lyrics/${props.id}`);
   };
   const cutedTrackName = props.track.slice(0, 40);
   const cutedAlbumName = props.album.slice(0, 40);
-
-  console.log(params.trackId);
 
   return (
     <li className="card">
