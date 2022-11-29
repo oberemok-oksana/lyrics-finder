@@ -36,7 +36,7 @@ h1 {
   gap: 10px;
 }
 
-.header-from__input {
+.header-form__input {
   padding: 8px 12px;
   border-radius: 5px;
 }
@@ -57,4 +57,97 @@ h1 {
 
 .header-form__btn:active {
   transform: scale(1.02);
+}
+
+.cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  list-style-type: none;
+  padding-left: 0;
+  flex-wrap: wrap;
+}
+
+.card {
+  border: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  padding: 20px;
+  border-radius: 5px;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.card__btn {
+  background-color: black;
+  color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 7px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.card__btn:hover {
+  opacity: 0.8;
+}
+
+.card__description {
+  display: flex;
+  /* align-items: center; */
+}
+
+.bold-text {
+  font-weight: 600;
+}
+
+.card__title {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.main h3 {
+  text-align: center;
+}
+
+.lyrics-card__btn {
+  width: fit-content;
+}
+
+.lyrics__text {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.name-wrapper {
+  background-color: #e0dfdf;
+  padding: 10px 20px;
+}
+
+.lyrics-artist {
+  color: #7b7777;
+  font-weight: 600;
+}
+
+.lyrics__text p {
+  padding: 0 20px;
+}
+
+.lyrics-description {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.track-description {
+  padding: 10px 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.track-description:last-child {
+  border-bottom: none;
 }
